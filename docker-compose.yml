@@ -1,0 +1,15 @@
+version: '2'
+services:
+
+  app:
+    image: weatherwatch-server
+    environment:
+      - PORT=8888
+    volumes:
+      - ./app:/app
+    command: /app/start.sh
+    working_dir: "/app"
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
