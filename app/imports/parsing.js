@@ -4,14 +4,14 @@ import SunCalc from 'suncalc';
 import _ from 'lodash';
 import { Constants } from './constants.js';
 
-var findCelestialEvents = function(timestamp, position, moon) {
+let findCelestialEvents = function(timestamp, position, moon) {
 
 	const now = timestamp.getTime();
 
 	const rises = [];
 	const sets = [];
 
-	var timesFunction = (!moon) ? SunCalc.getTimes : SunCalc.getMoonTimes;
+	let timesFunction = (!moon) ? SunCalc.getTimes : SunCalc.getMoonTimes;
 
 	const riseKey = (!moon) ? "sunrise" : "rise";
 	const setKey = (!moon) ? "sunset" : "set";
@@ -56,7 +56,7 @@ var findCelestialEvents = function(timestamp, position, moon) {
 	return { rises, sets };
 };
 
-var createWeatherObject = function(timestamp, startDate, location, country,
+let createWeatherObject = function(timestamp, startDate, location, country,
 	latLonString, timeZoneString, headerArray, valueArray) {
 
 	const weatherData = {};
@@ -78,18 +78,8 @@ var createWeatherObject = function(timestamp, startDate, location, country,
 		longitude: parseFloat(positionTokens[1])
 	};
 
-	const sunEvents = findCelestialEvents(timestamp, weatherData.position, false);
-	const moonEvents = findCelestialEvents(timestamp, weatherData.position, true);
-
-	weatherData.sunEvents = {
-		rises: sunEvents.rises,
-		sets: sunEvents.sets
-	};
-
-	weatherData.moonEvents = {
-		rises: moonEvents.rises,
-		sets: moonEvents.sets
-	};
+	weatherData.sunEvents = findCelestialEvents(timestamp, weatherData.position, false);
+	weatherData.moonEvents = findCelestialEvents(timestamp, weatherData.position, true);
 
 	const nHeaders = headerArray.length;
 	const nObjects = valueArray.length / nHeaders;
@@ -130,11 +120,11 @@ var createWeatherObject = function(timestamp, startDate, location, country,
 	return weatherData;
 }
 
-var parseXml = function(data) {
+let parseXml = function(data) {
 
-	var DOMParser = require('xmldom').DOMParser;
-	var parser = new DOMParser();
-	var xmlDoc = parser.parseFromString(data, "text/xml");
+	let DOMParser = require('xmldom').DOMParser;
+	let parser = new DOMParser();
+	let xmlDoc = parser.parseFromString(data, "text/xml");
 
 	const location = xmlDoc.getElementsByTagName("gml:name")[0].firstChild.data;
 	const latLonString = xmlDoc.getElementsByTagName("gml:pos")[0].firstChild.data;
@@ -149,7 +139,7 @@ var parseXml = function(data) {
 		country = xmlDoc.getElementsByTagName("target:country")[0].firstChild.data;
 	} catch (e) {}
 
-	var timestamp;
+	let timestamp;
 	for (let i = 0; i < docAttributes.length; i++) {
 		if (docAttributes[i].name === "timeStamp") {
 			timestamp = new Date(docAttributes[i].nodeValue);

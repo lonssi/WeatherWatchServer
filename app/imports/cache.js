@@ -46,7 +46,7 @@ class WeatherCache {
 	_findByName(locationUser, date) {
 
 		locationUser = locationUser.toUpperCase();
-		var location = locationUser;
+		let location = locationUser;
 
 		// First try to find a matching true name from name cache
 		const trueNameObject = this.nameCache[locationUser];
@@ -105,8 +105,8 @@ class WeatherCache {
 	 * @param  {Object} cache - weather data cache or location name cache
 	 */
 	removeOldest(cache) {
-		var keyOldest = Object.keys(cache)[0];
-		var dateOldest = cache[keyOldest].time;
+		let keyOldest = Object.keys(cache)[0];
+		let dateOldest = cache[keyOldest].time;
 		for (const key in cache) {
 			const date = cache[key].time
 			if (date < dateOldest) {

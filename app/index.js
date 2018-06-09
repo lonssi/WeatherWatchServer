@@ -16,7 +16,7 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
-var limiter = new RateLimit({
+let limiter = new RateLimit({
 	windowMs: 5000,
 	max: 4,
 	delayMs: 100

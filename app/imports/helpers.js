@@ -2,12 +2,12 @@ import { Constants } from './constants.js';
 import _ from 'lodash';
 
 
-var getClosestStartingHourDate = function(date) {
+let getClosestStartingHourDate = function(date) {
 	return date.getTime() - date.getMinutes() * Constants.minuteEpochs -
 		date.getSeconds() * Constants.secondEpochs - date.getMilliseconds();
 };
 
-var deg2rad = function(deg) {
+let deg2rad = function(deg) {
 	return deg * (Math.PI/180);
 };
 
@@ -28,7 +28,7 @@ export const Helpers = {
 		const host = 'https://data.fmi.fi/fmi-apikey/';
 		const request = "fmi::forecast::hirlam::surface::point::multipointcoverage";
 
-		var url = host + apikey + "/wfs" + "?request=getFeature" +
+		let url = host + apikey + "/wfs" + "?request=getFeature" +
 			"&storedquery_id=" + request + "&starttime=" + startDateStr;
 
 		if (_.isString(location)) {
@@ -102,15 +102,15 @@ export const Helpers = {
 		const lat2 = loc2.latitude;
 		const lon2 = loc2.longitude;
 
-		var R = 6371;  // Radius of the earth in km
-		var dLat = deg2rad(lat2 - lat1);  // deg2rad below
-		var dLon = deg2rad(lon2 - lon1);
-		var a =
+		let R = 6371;  // Radius of the earth in km
+		let dLat = deg2rad(lat2 - lat1);  // deg2rad below
+		let dLon = deg2rad(lon2 - lon1);
+		let a =
 			Math.sin(dLat/2) * Math.sin(dLat/2) +
 			Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
 			Math.sin(dLon/2) * Math.sin(dLon/2);
-		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		var d = R * c; // Distance in km
+		let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		let d = R * c; // Distance in km
 		return d;
 	}
 }
